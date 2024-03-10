@@ -11,10 +11,21 @@ class BaseModel:
     """
     BaseModel class: Represents a base model with common attributes and methods
     """
-
-    self.id = str(uuid4())
-    self.created_at = datetime.now()
-    self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes a new instance of the BaseModel class.
+        """
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "_class_":
+                    continue
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                setattr(self, key, value)
+            else:
+                self.id = str(uuid4())
+                self.created_at = datetime.now()
+                self.updated_at = datetime.now()
 
 
 def save(self):
