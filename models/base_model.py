@@ -26,10 +26,7 @@ def save(self):
     models.storage.save()
 
 
-def to_dict(self):
-    """
-    Converts the BaseModel object to a dictionary for serialization.
-    """
+
 
 
 def to_dict(self):
