@@ -22,7 +22,17 @@ class FileStorage:
             dict_obj[key] = obj.to_dict()
         with open(FileStorage.__file_path, "w") as f:
             json.dump(dict_obj, f)
+    def reload(self):
+        """Deserializes the JSON file to instances in __objects."""
 
+        try:
+            with open(self.__file_path, "r") as f:
+                for key, value in json.load(f).items():
+                    class_name = key.split(".")[0]
+                    obj = eval(class_name)(**value)
+                    self.__objects[key] = obj
+        except FileNotFoundError:
+            pass
 
 
 
